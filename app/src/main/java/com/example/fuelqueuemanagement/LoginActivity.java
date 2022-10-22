@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                         sharedPreferenceClass.setValue_string("token", token);
                         Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
 
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, UserMainActivity.class));
                     }
                     progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences todo_pref = getSharedPreferences("user_todo", MODE_PRIVATE);
         //go to main activity if the user is already logged in
         if(todo_pref.contains("token")) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, UserMainActivity.class));
             finish();
         }
     }
