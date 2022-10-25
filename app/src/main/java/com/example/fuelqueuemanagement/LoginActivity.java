@@ -99,11 +99,18 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     if(response.getBoolean("success")) {
                         String token = response.getString("token"); //access response body
+                        String userType = response.getString("type");
 
                         sharedPreferenceClass.setValue_string("token", token);
-                        Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "login successfull!", Toast.LENGTH_SHORT).show();
 
-                        startActivity(new Intent(LoginActivity.this, UserMainActivity.class));
+                        //navigate user to the correct main screen
+                        if(userType.equals("user")) {
+                            startActivity(new Intent(LoginActivity.this, UserMainActivity.class));
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, ShedMainActivity.class));
+                        }
+
                     }
                     progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
@@ -120,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers,  "utf-8"));
                         JSONObject obj = new JSONObject(res);
-                        Toast.makeText(LoginActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login unsuccessful", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
