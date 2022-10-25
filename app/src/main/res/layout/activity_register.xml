@@ -13,7 +13,7 @@
         >
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/searchBtn"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             app:srcCompat="@drawable/fuel_app_logo_removebg_preview" />
