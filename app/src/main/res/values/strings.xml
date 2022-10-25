@@ -3,4 +3,12 @@
 
     <string name="drawer_open">navigation_drawer_open</string>
     <string name="drawer_close">navigation_drawer_close</string>
+
+    <string-array name="vehicalTypes">
+        <item></item>
+        <item>Bus</item>
+        <item>Car</item>
+        <item>Bike</item>
+        <item>Three Wheeler</item>
+    </string-array>
 </resources>

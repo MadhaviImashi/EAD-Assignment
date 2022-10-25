@@ -4,22 +4,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -42,21 +41,27 @@ public class UserRegisterActivity extends AppCompatActivity {
     private EditText name_ET, email_ET, password_ET;
     ProgressBar progressBar;
 
-    private String name, email, password;
+    private String name, email, password, vehicalType;
     UtilService utilService;
     SharedPreferenceClass sharedPreferenceClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_user);
 
         loginBtn = findViewById(R.id.loginBtn);
         name_ET = findViewById(R.id.name_ET);
         email_ET = findViewById(R.id.email_ET);
         password_ET = findViewById(R.id.password_ET);
+        Spinner vehicalTypeDropdown = findViewById(R.id.vehcalTypeSpinner);
         progressBar = findViewById(R.id.progress_bar);
         registerBtn = findViewById(R.id.createUserBtn);
         utilService = new UtilService();
+
+        ArrayAdapter<CharSequence>adapter= ArrayAdapter.createFromResource(this, R.array.vehicalTypes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        vehicalTypeDropdown.setAdapter(adapter);
 
         sharedPreferenceClass = new SharedPreferenceClass(this);
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +79,7 @@ public class UserRegisterActivity extends AppCompatActivity {
                 name = name_ET.getText().toString();
                 email = email_ET.getText().toString();
                 password = password_ET.getText().toString();
+                vehicalType = vehicalTypeDropdown.getSelectedItem().toString();
                 if(validate(view)) {
                     registerUser(view);
                 }
@@ -88,6 +94,8 @@ public class UserRegisterActivity extends AppCompatActivity {
         params.put("email", email);
         params.put("password", password);
         params.put("name", name);
+        params.put("vehicalType", vehicalType);
+        params.put("type", "user");
 
         String apiKey = "https://ead-fuel-app.herokuapp.com/api/auth/register";
 
@@ -99,7 +107,7 @@ public class UserRegisterActivity extends AppCompatActivity {
                     if(response.getBoolean("success")) {
                         String token = response.getString("token");
                         sharedPreferenceClass.setValue_string("token", token);
-                        Toast.makeText(UserRegisterActivity.this, token, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserRegisterActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserRegisterActivity.this, LoginActivity.class));
                     }
                     progressBar.setVisibility(View.GONE);

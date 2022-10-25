@@ -2,15 +2,16 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:fillViewport="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#E1DBDB"
+    android:backgroundTint="#ECE4E4"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryDark"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView"
@@ -26,20 +27,20 @@
             android:text="Welcome to SL Fuel App"
             android:textColor="#ffffff"
             android:textSize="20sp" />
+
         <ProgressBar
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:id="@+id/progress_bar"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="463dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="45dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical">
 
@@ -81,24 +82,25 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#D3CFCF" />
 
-            <EditText
-                android:id="@+id/vehical_type_ET"
+            <Spinner
+                android:id="@+id/vehcalTypeSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="41dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/input_field"
-                android:backgroundTint="#54504C4C"
-                android:hint="Vehical Type"
-                android:inputType="text"
+                android:background="#54504C4C"
+                android:hint="Select Vehical Type"
+                android:padding="5dip"
+                android:popupBackground="#54504C4C"
                 android:singleLine="true"
-                android:textColor="#ffffff"
-                android:textColorHint="#D3CFCF" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <Button
                 android:id="@+id/createUserBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="90dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_bg"
                 android:backgroundTint="#DAB600"
                 android:text="Register"
@@ -106,12 +108,6 @@
                 android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="50dp"
-                android:background="@color/shade_black" />
 
             <Button
                 android:id="@+id/loginBtn"
