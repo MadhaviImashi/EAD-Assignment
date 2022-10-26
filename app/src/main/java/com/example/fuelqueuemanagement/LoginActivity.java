@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         //navigate user to the correct main screen
                         if(userType.equals("user")) {
-                            startActivity(new Intent(LoginActivity.this, UserMainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, SearchStationActivity.class));
                         } else {
                             startActivity(new Intent(LoginActivity.this, ShedMainActivity.class));
                         }
