@@ -14,6 +14,120 @@
         android:background="#000000"
         android:backgroundTint="#000000">
 
+        <EditText
+            android:id="@+id/etDieselArrivalTime"
+            android:layout_width="174dp"
+            android:layout_height="48dp"
+            android:background="@drawable/input_field"
+            android:backgroundTint="#54504C4C"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:text="25.10.22, 09:00 am"
+            android:textColor="#ffffff"
+            android:textColorHint="#D3CFCF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.848"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.67" />
+
+        <EditText
+            android:id="@+id/etDieselArrivalQuantity"
+            android:layout_width="174dp"
+            android:layout_height="48dp"
+            android:background="@drawable/input_field"
+            android:backgroundTint="#54504C4C"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:text="2000L"
+            android:textColor="#ffffff"
+            android:textColorHint="#D3CFCF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.848"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.754" />
+
+        <EditText
+            android:id="@+id/etPetrolArrivalTime"
+            android:layout_width="174dp"
+            android:layout_height="48dp"
+            android:background="@drawable/input_field"
+            android:backgroundTint="#54504C4C"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:text="25.10.22, 08:00 am"
+            android:textColor="#ffffff"
+            android:textColorHint="#D3CFCF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.848"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.301" />
+
+        <EditText
+            android:id="@+id/etPetrolFinishedTime"
+            android:layout_width="174dp"
+            android:layout_height="48dp"
+            android:background="@drawable/input_field"
+            android:backgroundTint="#54504C4C"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:text="25.10.22, 12:00 pm"
+            android:textColor="#ffffff"
+            android:textColorHint="#D3CFCF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.848"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.465" />
+
+        <EditText
+            android:id="@+id/etPetrolArrivalQuantity"
+            android:layout_width="174dp"
+            android:layout_height="48dp"
+            android:background="@drawable/input_field"
+            android:backgroundTint="#54504C4C"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:text="2000L"
+            android:textColor="#ffffff"
+            android:textColorHint="#D3CFCF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.848"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.382" />
+
+        <EditText
+            android:id="@+id/etDieselFinishedTime"
+            android:layout_width="174dp"
+            android:layout_height="48dp"
+            android:background="@drawable/input_field"
+            android:backgroundTint="#54504C4C"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true"
+            android:text="25.10.22, 13:00 pm"
+            android:textColor="#ffffff"
+            android:textColorHint="#D3CFCF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.848"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.84" />
+
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="133dp"
@@ -24,54 +138,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/fuel_app_logo_removebg_preview" />
-
-        <EditText
-            android:id="@+id/etDieselFinishedTime"
-            android:layout_width="164dp"
-            android:layout_height="53dp"
-            android:ems="10"
-            android:hint="Enter finished time"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="13:00 pm"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.854"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.858" />
-
-        <EditText
-            android:id="@+id/etDieselArrivalQuantity"
-            android:layout_width="164dp"
-            android:layout_height="48dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="2000L"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.854"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.77" />
-
-        <EditText
-            android:id="@+id/etDieselArrivalTime"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="09:00 am"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.854"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.685" />
 
         <TextView
             android:id="@+id/textView13"
@@ -156,54 +222,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.481" />
-
-        <EditText
-            android:id="@+id/etPetrolArrivalTime"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="08:00 am"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.854"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.316" />
-
-        <EditText
-            android:id="@+id/etPetrolArrivalQuantity"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="1000L"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.854"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.398" />
-
-        <EditText
-            android:id="@+id/etPetrolFinishedTime"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="12:00 pm"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.854"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.479" />
 
         <Button
             android:id="@+id/etEditFuelDetails"
