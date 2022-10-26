@@ -82,15 +82,25 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#D3CFCF" />
 
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="Select Vehical Type"
+                android:textColor="#D3CFCF"
+                android:textSize="18sp" />
+
             <Spinner
                 android:id="@+id/vehcalTypeSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:layout_marginTop="20dp"
                 android:background="#54504C4C"
                 android:hint="Select Vehical Type"
                 android:padding="5dip"
-                android:popupBackground="#54504C4C"
+                android:popupBackground="@drawable/btn_bg"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white" />
