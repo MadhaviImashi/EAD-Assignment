@@ -60,6 +60,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        shedRegisterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, StationOwnerSignupActivity.class);
+                startActivity(intent);
+            }
+        });
+
         loginBtn = findViewById(R.id.loginBtn);
         et_email = findViewById(R.id.email_ET);
         et_password = findViewById(R.id.password_ET);
@@ -111,7 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("user_id", user_id);
                             startActivity(intent);
                         } else {
-                            startActivity(new Intent(LoginActivity.this, ShedMainActivity.class));
+                            Intent intent = new Intent(LoginActivity.this, StationManagementActivity.class);
+                            intent.putExtra("user_id", user_id);
+                            startActivity(intent);
                         }
 
                     }
