@@ -81,10 +81,8 @@ public class ExitAfterPump extends AppCompatActivity {
                         Intent intent = new Intent(ExitAfterPump.this, LoginActivity.class);
                         startActivity(intent);
                     }
-//                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
-//                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -97,10 +95,8 @@ public class ExitAfterPump extends AppCompatActivity {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
                         Toast.makeText(ExitAfterPump.this, "Couldn't update fuel amount", Toast.LENGTH_SHORT).show();
-//                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
-//                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

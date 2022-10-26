@@ -32,7 +32,6 @@ public class FuelAvailability extends AppCompatActivity {
     private String station_id, station_name,  petrol, diesel;
     private EditText heading, petrol_status, diesel_status;
 
-    ProgressBar progressBar;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,7 +45,6 @@ public class FuelAvailability extends AppCompatActivity {
 
         Log.e("getExtra-stationID:", station_id+""+station_name);
 
-        progressBar = findViewById(R.id.progress_bar);
         petrol_status = findViewById(R.id.petrol_status);
         diesel_status = findViewById(R.id.dieselStatus);
         heading = findViewById(R.id.heading);
@@ -89,10 +87,8 @@ public class FuelAvailability extends AppCompatActivity {
 
                         Toast.makeText(FuelAvailability.this, "got latest availability status", Toast.LENGTH_SHORT).show();
                     }
-//                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
-//                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -105,10 +101,8 @@ public class FuelAvailability extends AppCompatActivity {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
                         Toast.makeText(FuelAvailability.this, "Couldn't fetch fuel details", Toast.LENGTH_SHORT).show();
-//                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
-//                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

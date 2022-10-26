@@ -69,7 +69,6 @@ public class SearchStationActivity extends AppCompatActivity {
     }
 
     public void searchFuelStation(View view) {
-//        progressBar.setVisibility(view.VISIBLE);
 
         final HashMap<String, String> params = new HashMap<>();
         params.put("station_name", searchInput);
@@ -95,10 +94,8 @@ public class SearchStationActivity extends AppCompatActivity {
                         intent.putExtra("user_id", user_id);
                         startActivity(intent);
                     }
-//                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
-//                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -111,10 +108,8 @@ public class SearchStationActivity extends AppCompatActivity {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
                         Toast.makeText(SearchStationActivity.this, "Couldn't find a matching fuel station", Toast.LENGTH_SHORT).show();
-//                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
-//                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

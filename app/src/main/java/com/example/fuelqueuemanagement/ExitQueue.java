@@ -103,10 +103,8 @@ public class ExitQueue extends AppCompatActivity {
                         String msg = response.getString("message"); //access response body
                         Toast.makeText(ExitQueue.this, msg, Toast.LENGTH_SHORT).show();
                     }
-//                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
-//                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -119,10 +117,8 @@ public class ExitQueue extends AppCompatActivity {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
                         Toast.makeText(ExitQueue.this, "You should be joined first before exit", Toast.LENGTH_SHORT).show();
-//                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
-//                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

@@ -195,10 +195,8 @@ public class StationDetailsActivity extends AppCompatActivity {
                         petrol_ql_bike.setText(String.valueOf(queue_lengths.getInt("petrol_bike_queue_length")));
                         petrol_ql_3wheeler.setText(String.valueOf(queue_lengths.getInt("petrol_threeWheeler_queue_length")));
                     }
-//                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
-//                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -211,10 +209,8 @@ public class StationDetailsActivity extends AppCompatActivity {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
                         Toast.makeText(StationDetailsActivity.this, "Couldn't fetch fuel details", Toast.LENGTH_SHORT).show();
-//                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
-//                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }
@@ -256,10 +252,8 @@ public class StationDetailsActivity extends AppCompatActivity {
                         petrol_wt_bike.setText(queue_waiting_times.getString("w_time_for_petrol_bike_queue"));
                         petrol_wt_3wheeler.setText(queue_waiting_times.getString("w_time_for_petrol_threewheeler_queue"));
                     }
-//                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
-//                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -272,10 +266,8 @@ public class StationDetailsActivity extends AppCompatActivity {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
                         Toast.makeText(StationDetailsActivity.this, "Couldn't fetch fuel details", Toast.LENGTH_SHORT).show();
-//                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
-//                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

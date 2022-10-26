@@ -32,7 +32,6 @@ import java.util.Map;
 
 public class JoinUserToTheQueue extends AppCompatActivity {
     private String station_id, station_name, user_id, vehical_type, fuel_type;
-    ProgressBar progressBar;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -72,10 +71,8 @@ public class JoinUserToTheQueue extends AppCompatActivity {
                         Intent intent = new Intent(JoinUserToTheQueue.this, StationDetailsActivity.class);
                         startActivity(intent);
                     }
-//                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
-//                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -88,10 +85,8 @@ public class JoinUserToTheQueue extends AppCompatActivity {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
                         Toast.makeText(JoinUserToTheQueue.this, "Couldn't add user to the queue", Toast.LENGTH_SHORT).show();
-//                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
-//                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

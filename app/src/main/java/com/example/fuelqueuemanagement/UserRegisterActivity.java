@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,8 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-//import com.codewithajit.todoapp.UtilsService.SharedPreferenceClass;
-//import com.codewithajit.todoapp.UtilsService.UtilService;
 import com.example.fuelqueuemanagement.UtilsService.SharedPreferenceClass;
 import com.example.fuelqueuemanagement.UtilsService.UtilService;
 
@@ -108,12 +107,13 @@ public class UserRegisterActivity extends AppCompatActivity {
                         String token = response.getString("token");
                         sharedPreferenceClass.setValue_string("token", token);
                         Toast.makeText(UserRegisterActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(UserRegisterActivity.this, LoginActivity.class));
                     }
                     progressBar.setVisibility(View.GONE);
+                    startActivity(new Intent(UserRegisterActivity.this, LoginActivity.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     progressBar.setVisibility(View.GONE);
+                    Log.e("register unsuccessful", "couldn't register this user ");
                 }
             }
         }, new Response.ErrorListener() {
@@ -126,7 +126,7 @@ public class UserRegisterActivity extends AppCompatActivity {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers,  "utf-8"));
 
                         JSONObject obj = new JSONObject(res);
-                        Toast.makeText(UserRegisterActivity.this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserRegisterActivity.this, obj.getString("A similar user already exists"), Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
