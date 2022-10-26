@@ -88,6 +88,7 @@ public class SearchStationActivity extends AppCompatActivity {
                         //navigate user to the correct main screen
                         Intent intent = new Intent(SearchStationActivity.this, UserMainActivity.class);
                         intent.putExtra("station_id", station_id);
+                        intent.putExtra("station_name", searchInput);
                         startActivity(intent);
                     }
 //                    progressBar.setVisibility(View.GONE);
