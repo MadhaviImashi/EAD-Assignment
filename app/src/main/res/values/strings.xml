@@ -5,7 +5,6 @@
     <string name="drawer_close">navigation_drawer_close</string>
 
     <string-array name="vehicalTypes">
-        <item></item>
         <item>Bus</item>
         <item>Car</item>
         <item>Bike</item>
