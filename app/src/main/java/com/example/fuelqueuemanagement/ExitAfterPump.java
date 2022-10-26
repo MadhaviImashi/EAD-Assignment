@@ -1,19 +1,16 @@
 package com.example.fuelqueuemanagement;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -25,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.fuelqueuemanagement.UtilsService.UtilService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,47 +30,42 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SearchStationActivity extends AppCompatActivity {
-
-    UtilService utilService;
-    ProgressBar progressBar;
-
-    private ImageButton searchBtn;
-    private EditText searchText;
-    private String user_id, searchInput, msg;
-
-    @SuppressLint("MissingInflatedId")
-    @Override
+public class ExitAfterPump extends AppCompatActivity {
+    private Button submit_btn;
+    private String station_id, fuel_type, pumped_amount;
+    private EditText amount;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_station);
+        setContentView(R.layout.exit_after_pump);
 
         Intent intent = getIntent();
-        user_id = intent.getStringExtra("user_id");
+        station_id = intent.getStringExtra("station_id");
 
-        searchBtn = findViewById(R.id.searchStationBtn);
-        searchText = findViewById(R.id.search_input);
-        progressBar = findViewById(R.id.progress_bar);
-        utilService = new UtilService();
+        Spinner fuelTypeSpinner = findViewById(R.id.fuelTypeSpinner);
+        submit_btn = findViewById(R.id.submitFuelAmountBtn);
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this, R.array.fuelTypes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        fuelTypeSpinner.setAdapter(adapter);
+        fuel_type = fuelTypeSpinner.getSelectedItem().toString();
+        amount = findViewById(R.id.pumpedAmount);
+        pumped_amount = amount.getText().toString();
+
+        submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                utilService.hideKeyboard(view, SearchStationActivity.this);
-
-                searchInput = searchText.getText().toString();
-                searchFuelStation(view);
+                ExitUserAfterPump();
             }
         });
     }
-
-    public void searchFuelStation(View view) {
-//        progressBar.setVisibility(view.VISIBLE);
-
+    public void ExitUserAfterPump() {
         final HashMap<String, String> params = new HashMap<>();
-        params.put("station_name", searchInput);
+        params.put("station_id", station_id);
+        params.put("fuel_type", fuel_type);
+        params.put("amount", pumped_amount);
 
-        String apiKey = "https://ead-fuel-app.herokuapp.com/api/fuel-station/search-station";
+        String apiKey = "https://ead-fuel-app.herokuapp.com/api/fuel-station/exit-after-pump";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 apiKey, new JSONObject(params), new Response.Listener<JSONObject>() {
@@ -83,16 +74,11 @@ public class SearchStationActivity extends AppCompatActivity {
                 try {
                     if (response.getBoolean("success")) {
                         Log.e("HttpClient", "inside onResponse");
-                        String station_id = response.getString("station_id"); //access response body
-                        msg = response.getString("message");
+                        String msg = response.getString("message"); //access response body
 
-                        Toast.makeText(SearchStationActivity.this, msg, Toast.LENGTH_SHORT).show();
-
-                        //navigate user to the correct main screen
-                        Intent intent = new Intent(SearchStationActivity.this, UserMainActivity.class);
-                        intent.putExtra("station_id", station_id);
-                        intent.putExtra("station_name", searchInput);
-                        intent.putExtra("user_id", user_id);
+                        //navigate user back to login interface
+                        Toast.makeText(ExitAfterPump.this, "Thank you!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(ExitAfterPump.this, LoginActivity.class);
                         startActivity(intent);
                     }
 //                    progressBar.setVisibility(View.GONE);
@@ -110,7 +96,7 @@ public class SearchStationActivity extends AppCompatActivity {
                     try {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
-                        Toast.makeText(SearchStationActivity.this, "Couldn't find a matching fuel station", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ExitAfterPump.this, "Couldn't update fuel amount", Toast.LENGTH_SHORT).show();
 //                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
@@ -126,7 +112,6 @@ public class SearchStationActivity extends AppCompatActivity {
                 return params;
             }
         };
-
         // request add
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);

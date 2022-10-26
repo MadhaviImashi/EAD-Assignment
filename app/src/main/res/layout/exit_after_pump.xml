@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="184dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:text="Please enter how many Litres of fuel you pumped? "
+            android:textColor="#D3CFCF"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="679dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:text="Fuel Type"
+                android:textColor="#D3CFCF"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/fuelTypeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="40dp"
+                android:background="#A63C3F41"
+                android:hint="Select Fuel Type"
+                android:contentDescription="fuel type spinner"
+                android:padding="5dip"
+                android:popupBackground="@drawable/btn_bg"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:text="Amount (in Litres)"
+                android:textColor="#D3CFCF"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/pumpedAmount"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="#A63C3F41"
+                android:backgroundTint="#3C3F41"
+                android:ems="10"
+                android:hint="10"
+                android:inputType="number"
+                android:textColor="@color/white"
+                android:textColorHint="#92D3CFCF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/submitFuelAmountBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="230dp"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_weight="1"
+                    android:background="#D73C3F41"
+                    android:text="submit"
+                    android:textColor="#D3CFCF" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

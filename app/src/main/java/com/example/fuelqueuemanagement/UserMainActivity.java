@@ -16,7 +16,7 @@ public class UserMainActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     private Button goToStationDetailsBtn, checkFuelAvailabilityBtn;
-    private String station_id, station_name,  msg;
+    private String station_id, station_name, user_id,  msg;
     private EditText stationName;
 
     @SuppressLint("MissingInflatedId")
@@ -28,6 +28,7 @@ public class UserMainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         station_id = intent.getStringExtra("station_id");
         station_name = intent.getStringExtra("station_name");
+        user_id = intent.getStringExtra("user_id");
 
         Log.e("getExtra-stationID:", station_id+""+station_name);
 
@@ -43,6 +44,7 @@ public class UserMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(UserMainActivity.this, StationDetailsActivity.class);
                 intent.putExtra("station_id", station_id);
+                intent.putExtra("user_id", user_id);
                 startActivity(intent);
             }
         });

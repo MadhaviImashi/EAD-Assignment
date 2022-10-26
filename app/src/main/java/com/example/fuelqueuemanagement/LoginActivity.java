@@ -100,13 +100,16 @@ public class LoginActivity extends AppCompatActivity {
                     if(response.getBoolean("success")) {
                         String token = response.getString("token"); //access response body
                         String userType = response.getString("type");
+                        String user_id = response.getString("userId");
 
                         sharedPreferenceClass.setValue_string("token", token);
                         Toast.makeText(LoginActivity.this, "login successfull!", Toast.LENGTH_SHORT).show();
 
                         //navigate user to the correct main screen
                         if(userType.equals("user")) {
-                            startActivity(new Intent(LoginActivity.this, SearchStationActivity.class));
+                            Intent intent = new Intent(LoginActivity.this, SearchStationActivity.class);
+                            intent.putExtra("user_id", user_id);
+                            startActivity(intent);
                         } else {
                             startActivity(new Intent(LoginActivity.this, ShedMainActivity.class));
                         }

@@ -1,19 +1,17 @@
 package com.example.fuelqueuemanagement;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -25,7 +23,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.fuelqueuemanagement.UtilsService.UtilService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,47 +31,67 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SearchStationActivity extends AppCompatActivity {
+public class ExitQueue extends AppCompatActivity {
+    private String station_id, station_name, user_id, vehical_type, fuel_type;
+    private TextView exitHeading;
+    private Button exitBeforePump, exitAfterPump;
 
-    UtilService utilService;
     ProgressBar progressBar;
-
-    private ImageButton searchBtn;
-    private EditText searchText;
-    private String user_id, searchInput, msg;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_station);
+        setContentView(R.layout.exit_queue);
 
         Intent intent = getIntent();
+        station_id = intent.getStringExtra("station_id");
         user_id = intent.getStringExtra("user_id");
+        fuel_type = intent.getStringExtra("fuel_type");
+        vehical_type = intent.getStringExtra("vehical_type");
 
-        searchBtn = findViewById(R.id.searchStationBtn);
-        searchText = findViewById(R.id.search_input);
-        progressBar = findViewById(R.id.progress_bar);
-        utilService = new UtilService();
+        //set dynamic heading at the top of the exit screen
+        exitHeading = findViewById(R.id.exitHeading);
+        exitHeading.setText("Are you sure you want to exit the "+vehical_type+" queue?");
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        exitBeforePump = findViewById(R.id.exit_before_pump_btn);
+        exitAfterPump = findViewById(R.id.exit_after_pump_btn);
+
+        exitBeforePump.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                utilService.hideKeyboard(view, SearchStationActivity.this);
+                //exit the user from the correct queue
+                exitUserFromCorrectFuelQueue();
 
-                searchInput = searchText.getText().toString();
-                searchFuelStation(view);
+                Toast.makeText(ExitQueue.this, "You Exit the queue. Thank you!", Toast.LENGTH_SHORT).show();
+                //navigate user back to login interface
+                Intent intent = new Intent(ExitQueue.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        exitAfterPump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //exit the user from the correct queue
+                exitUserFromCorrectFuelQueue();
+
+                //navigate user to the next interface to get pumped fuel amount
+                Intent intent = new Intent(ExitQueue.this, ExitAfterPump.class);
+                intent.putExtra("station_id", station_id);
+                startActivity(intent);
             }
         });
     }
-
-    public void searchFuelStation(View view) {
-//        progressBar.setVisibility(view.VISIBLE);
-
+    public void exitUserFromCorrectFuelQueue() {
         final HashMap<String, String> params = new HashMap<>();
-        params.put("station_name", searchInput);
+        params.put("station_id", station_id);
+        params.put("user_id", user_id);
+        params.put("fuel_type", fuel_type);
+        params.put("vehical_type", vehical_type);
 
-        String apiKey = "https://ead-fuel-app.herokuapp.com/api/fuel-station/search-station";
+
+        String apiKey = "http://localhost:4000/api/fuel-station/exit-queue";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 apiKey, new JSONObject(params), new Response.Listener<JSONObject>() {
@@ -83,17 +100,8 @@ public class SearchStationActivity extends AppCompatActivity {
                 try {
                     if (response.getBoolean("success")) {
                         Log.e("HttpClient", "inside onResponse");
-                        String station_id = response.getString("station_id"); //access response body
-                        msg = response.getString("message");
-
-                        Toast.makeText(SearchStationActivity.this, msg, Toast.LENGTH_SHORT).show();
-
-                        //navigate user to the correct main screen
-                        Intent intent = new Intent(SearchStationActivity.this, UserMainActivity.class);
-                        intent.putExtra("station_id", station_id);
-                        intent.putExtra("station_name", searchInput);
-                        intent.putExtra("user_id", user_id);
-                        startActivity(intent);
+                        String msg = response.getString("message"); //access response body
+                        Toast.makeText(ExitQueue.this, msg, Toast.LENGTH_SHORT).show();
                     }
 //                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
@@ -110,7 +118,7 @@ public class SearchStationActivity extends AppCompatActivity {
                     try {
                         String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         JSONObject obj = new JSONObject(res);
-                        Toast.makeText(SearchStationActivity.this, "Couldn't find a matching fuel station", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ExitQueue.this, "You should be joined first before exit", Toast.LENGTH_SHORT).show();
 //                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException | UnsupportedEncodingException je) {
                         je.printStackTrace();
@@ -126,7 +134,6 @@ public class SearchStationActivity extends AppCompatActivity {
                 return params;
             }
         };
-
         // request add
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
