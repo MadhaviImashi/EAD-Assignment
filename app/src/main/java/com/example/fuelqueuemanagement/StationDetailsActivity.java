@@ -57,7 +57,7 @@ public class StationDetailsActivity extends AppCompatActivity {
         petrol_ql_3wheeler = findViewById(R.id.p_threewheeler_ql);
 
         //initialize waiting time variables
-        diesel_wt_bus = findViewById(R.id.p_threewheeler_wt);
+        diesel_wt_bus = findViewById(R.id.diesel_bus_wt);
         diesel_wt_3wheeler = findViewById(R.id.diesel_threewheeler_wt);
         petrol_wt_car = findViewById(R.id.p_car_wt);
         petrol_wt_bike = findViewById(R.id.p_bike_wt);
