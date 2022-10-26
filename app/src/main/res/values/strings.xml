@@ -10,4 +10,9 @@
         <item>Bike</item>
         <item>Three Wheeler</item>
     </string-array>
+
+    <string-array name="fuelTypes">
+        <item>Petrol</item>
+        <item>Diesel</item>
+    </string-array>
 </resources>
