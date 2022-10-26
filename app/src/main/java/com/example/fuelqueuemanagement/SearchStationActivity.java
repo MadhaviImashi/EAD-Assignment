@@ -41,13 +41,16 @@ public class SearchStationActivity extends AppCompatActivity {
 
     private ImageButton searchBtn;
     private EditText searchText;
-    private String searchInput, msg;
+    private String user_id, searchInput, msg;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_station);
+
+        Intent intent = getIntent();
+        user_id = intent.getStringExtra("user_id");
 
         searchBtn = findViewById(R.id.searchStationBtn);
         searchText = findViewById(R.id.search_input);
@@ -89,6 +92,7 @@ public class SearchStationActivity extends AppCompatActivity {
                         Intent intent = new Intent(SearchStationActivity.this, UserMainActivity.class);
                         intent.putExtra("station_id", station_id);
                         intent.putExtra("station_name", searchInput);
+                        intent.putExtra("user_id", user_id);
                         startActivity(intent);
                     }
 //                    progressBar.setVisibility(View.GONE);

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,9 +32,11 @@ import java.util.Map;
 
 public class StationDetailsActivity extends AppCompatActivity {
 
-    private String station_id, current_time;
+    private String station_id, user_id, current_time;
     private TextView diesel_ql_bus, diesel_ql_3wheeler, petrol_ql_car, petrol_ql_bike, petrol_ql_3wheeler;
     private TextView diesel_wt_bus, diesel_wt_3wheeler, petrol_wt_car, petrol_wt_bike, petrol_wt_3wheeler;
+    public Button petrol_car_exit, petrol_bike_exit, petrol_3wheel_exit, diesel_bus_exit, diesel_3wheel_exit;
+    public Button petrol_car_join, petrol_bike_join, petrol_3wheel_join, diesel_bus_join, diesel_3wheel_join;
     private JSONObject queue_lengths, queue_waiting_times;
     private EditText heading, petrol_status, diesel_status;
 
@@ -45,6 +49,7 @@ public class StationDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         station_id = intent.getStringExtra("station_id");
+        user_id = intent.getStringExtra("user_id");
 
         Log.e("getExtra-stationID:", station_id);
 
@@ -64,6 +69,100 @@ public class StationDetailsActivity extends AppCompatActivity {
         petrol_wt_3wheeler = findViewById(R.id.p_threewheeler_wt);
 
         displayFuelQueueDetails();
+
+        //initialize queue-join buttons
+        petrol_car_join = findViewById(R.id.petrol_car_join);
+        petrol_bike_join = findViewById(R.id.petrol_bike_join);
+        petrol_3wheel_join = findViewById(R.id.petrol_3wheel_join);
+        diesel_bus_join = findViewById(R.id.diesel_bus_join);
+        diesel_3wheel_join = findViewById(R.id.diesel_3wheel_join);
+
+        petrol_car_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToJoinQueueActivity("Petrol", "car");
+            }
+        });
+        petrol_bike_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToJoinQueueActivity("Petrol", "bike");
+            }
+        });
+        petrol_3wheel_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToJoinQueueActivity("Petrol", "threeWheeler");
+            }
+        });
+        diesel_bus_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToJoinQueueActivity("Diesel", "bus");
+            }
+        });
+        diesel_3wheel_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToJoinQueueActivity("Diesel", "threeWheeler");
+            }
+        });
+
+        //initialize queue-exit buttons
+        petrol_car_exit = findViewById(R.id.petrol_car_exit);
+        petrol_bike_exit = findViewById(R.id.petrol_bike_exit);
+        petrol_3wheel_exit = findViewById(R.id.petrol_3wheel_exit);
+        diesel_bus_exit = findViewById(R.id.diesel_bus_exit);
+        diesel_3wheel_exit = findViewById(R.id.diesel_3wheel_exit);
+
+        petrol_car_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToExitQueueActivity("Petrol", "car");
+            }
+        });
+        petrol_bike_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToExitQueueActivity("Petrol", "bike");
+            }
+        });
+        petrol_3wheel_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToExitQueueActivity("Petrol", "threeWheeler");
+            }
+        });
+        diesel_bus_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToExitQueueActivity("Diesel", "bus");
+            }
+        });
+        diesel_3wheel_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToExitQueueActivity("Diesel", "threeWheeler");
+            }
+        });
+    }
+
+    public void navigateToExitQueueActivity(String fuelType, String vehicalType) {
+        Intent intent = new Intent(StationDetailsActivity.this, ExitQueue.class);
+        intent.putExtra("station_id", station_id);
+        intent.putExtra("user_id", user_id);
+        intent.putExtra("fuel_type", fuelType);
+        intent.putExtra("vehical_type", vehicalType);
+        startActivity(intent);
+    }
+
+    public void navigateToJoinQueueActivity(String fuelType, String vehicalType) {
+        Intent intent = new Intent(StationDetailsActivity.this, JoinUserToTheQueue.class);
+        intent.putExtra("station_id", station_id);
+        intent.putExtra("user_id", user_id);
+        intent.putExtra("fuel_type", fuelType);
+        intent.putExtra("vehical_type", vehicalType);
+        startActivity(intent);
     }
 
     public void displayFuelQueueDetails() {

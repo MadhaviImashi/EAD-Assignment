@@ -116,7 +116,7 @@
                         android:text="01.30" />
 
                     <Button
-                        android:id="@+id/joinBtn1"
+                        android:id="@+id/petrol_car_join"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -133,7 +133,7 @@
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/exitBtn1"
+                        android:id="@+id/petrol_car_exit"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -176,7 +176,7 @@
                         android:text="00.30" />
 
                     <Button
-                        android:id="@+id/joinBtn2"
+                        android:id="@+id/petrol_bike_join"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -193,7 +193,7 @@
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/exitBtn2"
+                        android:id="@+id/petrol_bike_exit"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -236,7 +236,7 @@
                         android:text="00.20" />
 
                     <Button
-                        android:id="@+id/joinBtn3"
+                        android:id="@+id/petrol_3wheel_join"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -253,7 +253,7 @@
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/exitBtn3"
+                        android:id="@+id/petrol_3wheel_exit"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -344,7 +344,7 @@
                         android:text="00.30" />
 
                     <Button
-                        android:id="@+id/joinBtn4"
+                        android:id="@+id/diesel_bus_join"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -361,7 +361,7 @@
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/exitBtn4"
+                        android:id="@+id/diesel_bus_exit"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -404,7 +404,7 @@
                         android:text="00.20" />
 
                     <Button
-                        android:id="@+id/joinBtn5"
+                        android:id="@+id/diesel_3wheel_join"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
@@ -421,7 +421,7 @@
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/exitBtn5"
+                        android:id="@+id/diesel_3wheel_exit"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="2px"
