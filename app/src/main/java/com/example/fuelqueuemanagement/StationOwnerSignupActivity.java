@@ -131,7 +131,7 @@ public class StationOwnerSignupActivity extends AppCompatActivity {
         jsonBody.put("password", password);
         final String requestBody = jsonBody.toString();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "/register",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
