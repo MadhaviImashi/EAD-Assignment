@@ -99,7 +99,7 @@
             android:inputType="text"
             android:minHeight="48dp"
             android:singleLine="true"
-            android:text="2000L"
+            android:text="1000L"
             android:textColor="#ffffff"
             android:textColorHint="#D3CFCF"
             app:layout_constraintBottom_toBottomOf="parent"
