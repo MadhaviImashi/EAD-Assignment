@@ -153,7 +153,7 @@ public class StationOwnerSignupActivity extends AppCompatActivity {
                             //store the user in shared preferences
                             SharedPrefManager.getInstance(getApplicationContext()).stationLogin(fuelStation);
 
-                            //starte the profile activity
+                            //start the profile activity
                             finish();
                             startActivity(new Intent(getApplicationContext(), StationManagementActivity.class));
 
