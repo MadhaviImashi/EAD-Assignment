@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("user_id", user_id);
                             startActivity(intent);
                         } else {
-                            Intent intent = new Intent(LoginActivity.this, StationManagementActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, StationDashboardMain.class);
                             intent.putExtra("user_id", user_id);
                             startActivity(intent);
                         }
@@ -134,19 +134,8 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                NetworkResponse response = error.networkResponse;
-                if(error instanceof ServerError && response != null) {
-                    try {
-                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers,  "utf-8"));
-                        JSONObject obj = new JSONObject(res);
-                        Toast.makeText(LoginActivity.this, "Login unsuccessful", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                    } catch (JSONException | UnsupportedEncodingException je) {
-                        je.printStackTrace();
-                        progressBar.setVisibility(View.GONE);
-                    }
-                }
+                Toast.makeText(LoginActivity.this, "A user with this email couldn't be found", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
         })
         {
