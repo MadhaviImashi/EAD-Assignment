@@ -15,14 +15,14 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            app:srcCompat="@drawable/fuel_app_logo_removebg_preview" />
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/a_user_removebg_preview" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:text="Welcome to SL Fuel App"
             android:textColor="#ffffff"
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="463dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="55dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical">
 
