@@ -32,7 +32,7 @@
         <activity android:name=".ExitAfterPump"></activity>
         <activity android:name=".ExitQueue"></activity>
         <activity android:name=".JoinUserToTheQueue"></activity>
-        <activity android:name=".StationManagementActivity"></activity>
+        <activity android:name=".StationDashboardMain"></activity>
         <activity android:name=".StationOwnerSignupActivity"></activity>
         <activity android:name=".StationOwnerUpdateActivity"></activity>
     </application>
