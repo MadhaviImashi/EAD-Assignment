@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,13 +25,15 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StationManagementActivity extends AppCompatActivity {
-    private String station_id;
+public class StationDashboardMain extends AppCompatActivity {
+    private String station_id, d_arrival_date, p_arrival_date;
+    private TextView petrolStatus, dieselStatus;
     private JSONObject fuelShed, diesel, petrol;
     private TextView d_arrival_time, d_arrived_qty, d_finishing_time, d_avaiable_total_amount;
     private TextView p_arrival_time, p_arrived_qty, p_finishing_time, p_avaiable_total_amount;
@@ -55,6 +58,9 @@ public class StationManagementActivity extends AppCompatActivity {
         p_finishing_time = findViewById(R.id.petrolFinishedTime);
         p_avaiable_total_amount = findViewById(R.id.petrolTotal);
 
+        petrolStatus = findViewById(R.id.petrolStatus);
+        dieselStatus = findViewById(R.id.dieselStatus);
+
         goToUpdateFuelDetailsBtn = findViewById(R.id.editFuelDetails);
 
         displayFuelStationDetails();
@@ -63,7 +69,7 @@ public class StationManagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //navigate to updateDetails activity
-                Intent intent = new Intent(StationManagementActivity.this, StationOwnerUpdateActivity.class);
+                Intent intent = new Intent(StationDashboardMain.this, StationOwnerUpdateActivity.class);
                 intent.putExtra("station_id", station_id);
                 startActivity(intent);
             }
@@ -83,27 +89,51 @@ public class StationManagementActivity extends AppCompatActivity {
                 try {
                     if (response.getBoolean("success")) {
 
-                        Toast.makeText(StationManagementActivity.this, "got fuel station details", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StationDashboardMain.this, "got fuel station details", Toast.LENGTH_SHORT).show();
 
-                        //get fuel station details from http response
-                        fuelShed = response.getJSONObject("fuelShed");
-                        diesel = fuelShed.getJSONObject("Diesel"); //access response body
-                        petrol = fuelShed.getJSONObject("Petrol"); //access response body
-                        String var = diesel.getString("arrivalTime");
-                        Log.e("inside stationManager", "diesel-arrival time:  "+ fuelShed);
+//                        Boolean petrolAv = response.getBoolean("isPetrol");
+//                        Boolean dieselAv = response.getBoolean("isDiesel");
 
-                        //display diesel details
-                        d_arrival_time.setText(diesel.getString("arrivalTime"));
-                        d_arrived_qty.setText(diesel.getString("arrivedQuantity"));
-                        d_finishing_time.setText(diesel.getString("finishingTime"));
-                        d_avaiable_total_amount.setText(diesel.getString("avaiableTotalFuelAmount"));
-                        //display petrol details
-                        p_arrival_time.setText(petrol.getString("arrivalTime"));
-                        p_arrived_qty.setText(petrol.getString("arrivedQuantity"));
-                        p_finishing_time.setText(petrol.getString("finishingTime"));
-                        p_avaiable_total_amount.setText(petrol.getString("avaiableTotalFuelAmount"));
+//                        if(petrolAv && dieselAv) {
+                            //get fuel station details from http response
+                            fuelShed = response.getJSONObject("fuelShed");
+                            diesel = fuelShed.getJSONObject("Diesel"); //access response body
+                            petrol = fuelShed.getJSONObject("Petrol"); //access response body
+                            String var = diesel.getString("avaiableTotalFuelAmount");
+                            Log.e("inside stationManager", "diesel-arrival time:  "+ var);
 
-                        Toast.makeText(StationManagementActivity.this, "fetched fuel details", Toast.LENGTH_SHORT).show();
+                            //display diesel details
+                            d_arrival_time.setText(diesel.getString("arrivalDate")+"   "+diesel.getString("arrivalTime"));
+                            d_arrived_qty.setText(String.valueOf(diesel.getInt("arrivedQuantity")));
+                            d_finishing_time.setText(diesel.getString("finishingTime"));
+                            d_avaiable_total_amount.setText(String.valueOf(diesel.getInt("avaiableTotalFuelAmount")));
+                            if((diesel.getInt("avaiableTotalFuelAmount"))>0) {
+                                dieselStatus.setText("Available");
+                            }
+                            //display petrol details
+                            p_arrival_time.setText(petrol.getString("arrivalDate")+"   "+petrol.getString("arrivalTime"));
+                            p_arrived_qty.setText(String.valueOf(petrol.getInt("arrivedQuantity")));
+                            p_finishing_time.setText(petrol.getString("finishingTime"));
+                            p_avaiable_total_amount.setText(String.valueOf(petrol.getInt("avaiableTotalFuelAmount")));
+                            if((petrol.getInt("avaiableTotalFuelAmount"))>0) {
+                                petrolStatus.setText("Available");
+                            }
+                            Toast.makeText(StationDashboardMain.this, "fetched fuel details", Toast.LENGTH_SHORT).show();
+//                        }
+//                        else if(petrolAv) {
+//                            Intent intent = new Intent(StationDashboardMain.this, StationDashboardPetrol.class);
+////                            intent.putExtra("arrivalTime", );
+////                            intent.putExtra("arrivedQuantity", );
+////                            intent.putExtra("arrivalTime", );
+////                            intent.putExtra("arrivalTime", );
+//                            startActivity(intent);
+//                        }
+//                        else if(dieselAv) {
+//                            Intent intent = new Intent(StationDashboardMain.this, StationDashboardDiesel.class);
+////                            intent.putExtra("user_id", );
+//                            startActivity(intent);
+//                        }
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -112,17 +142,8 @@ public class StationManagementActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                NetworkResponse response = error.networkResponse;
-                if (error instanceof ServerError && response != null) {
-                    try {
-                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                        JSONObject obj = new JSONObject(res);
-                        Toast.makeText(StationManagementActivity.this, "Couldn't fetch fuel details", Toast.LENGTH_SHORT).show();
-                    } catch (JSONException | UnsupportedEncodingException je) {
-                        je.printStackTrace();
-                    }
-                }
+                Toast.makeText(StationDashboardMain.this, "couldn't fetch station details", Toast.LENGTH_SHORT).show();
+//                progressBar.setVisibility(View.GONE);
             }
         }) {
             @Override
