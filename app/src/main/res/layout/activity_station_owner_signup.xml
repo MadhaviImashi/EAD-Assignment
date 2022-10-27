@@ -13,31 +13,46 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#000000">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="168dp"
-            android:layout_height="160dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.007"
-            app:srcCompat="@drawable/fuel_app_logo_removebg_preview" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="79dp"
+            tools:layout_editor_absoluteY="87dp">
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Welcome to SL Fuel App"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4"
-            app:layout_constraintVertical_bias="0.0" />
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="108dp"
+                android:layout_height="114dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/admin_avatar" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to SL Fuel App"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="182dp"
+                    android:layout_height="21dp"
+                    android:layout_marginEnd="411dp"
+                    android:layout_marginBottom="731dp"
+                    android:gravity="center"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/station_name"
@@ -82,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fuel Types"
-            android:textColor="#C3AEAE"
+            android:textColor="#D3CFCF"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,13 +107,13 @@
             app:layout_constraintVertical_bias="0.477" />
 
         <CheckBox
-            android:id="@+id/petrol"
+            android:id="@+id/petrolCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#C3AEAE"
             android:minHeight="48dp"
             android:text="Petrol"
-            android:textColor="#C3AEAE"
+            android:textColor="#D3CFCF"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,13 +123,13 @@
             app:layout_constraintVertical_bias="0.519" />
 
         <CheckBox
-            android:id="@+id/diesel"
+            android:id="@+id/dieselCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#C3AEAE"
             android:minHeight="48dp"
             android:text="Diesel"
-            android:textColor="#C3AEAE"
+            android:textColor="#D3CFCF"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

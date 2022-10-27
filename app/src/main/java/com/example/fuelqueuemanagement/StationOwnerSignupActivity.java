@@ -5,18 +5,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.fuelqueuemanagement.dto.FuelStation;
+import com.android.volley.toolbox.Volley;
+import com.example.fuelqueuemanagement.UtilsService.SharedPreferenceClass;
+import com.example.fuelqueuemanagement.UtilsService.UtilService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,165 +36,134 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StationOwnerSignupActivity extends AppCompatActivity {
+    private Button registerBtn, loginBtn;
+    private EditText station_name_ET, admin_name_ET, email_ET, password_ET;
+    private CheckBox petrol, diesel;
+    private boolean isPetrol, isDiesel;
+    ProgressBar progressBar;
 
-    EditText station_name, owner_name, station_email, station_password;
-    CheckBox petrol, diesel;
+    private String stationName, adminName, email, password;
+    UtilService utilService;
+    SharedPreferenceClass sharedPreferenceClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_owner_signup);
 
+        station_name_ET = findViewById(R.id.station_name);
+        admin_name_ET = findViewById(R.id.owner_name);
+        email_ET = findViewById(R.id.station_email);
+        password_ET = findViewById(R.id.station_password);
+        progressBar = findViewById(R.id.progress_bar);
+        registerBtn = findViewById(R.id.station_register);
+        loginBtn = findViewById(R.id.stationLogin);
+        petrol = findViewById(R.id.petrolCheckbox);
+        diesel = findViewById(R.id.dieselCheckbox);
+        utilService = new UtilService();
 
-        //When the user is already logged in, it will directly start the MainActivity (profile) activity
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, StationManagementActivity.class));
-            return;
-        }
-
-        station_name = findViewById(R.id.station_name);
-        owner_name = findViewById(R.id.owner_name);
-        station_email = findViewById(R.id.station_email);
-        station_password = findViewById(R.id.station_password);
-        petrol = findViewById(R.id.petrol);
-        diesel = findViewById(R.id.diesel);
-
-        findViewById(R.id.station_register).setOnClickListener(new View.OnClickListener() {
+        registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //When the user pressed on button register, it will register the user to server
-                try {
-                    registerStation();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                utilService.hideKeyboard(view, StationOwnerSignupActivity.this);
+                stationName = station_name_ET.getText().toString();
+                adminName = admin_name_ET.getText().toString();
+                email = email_ET.getText().toString();
+                password = password_ET.getText().toString();
+                isPetrol = petrol.isChecked();
+                isDiesel = diesel.isChecked();
 
+                if (validate(view)) {
+                    registerFuelStation(view);
+                }
             }
         });
-
-        findViewById(R.id.stationLogin).setOnClickListener(new View.OnClickListener() {
-
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //When the user pressed on textview that already register open LoginActivity
-                finish();
-                startActivity(new Intent(StationOwnerSignupActivity.this, LoginActivity.class));
-
+                Intent intent = new Intent(StationOwnerSignupActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    private void registerStation() throws JSONException {
+    private void registerFuelStation(View view) {
+        progressBar.setVisibility(View.VISIBLE);
 
-        final String stationName = station_name.getText().toString().trim();
-        final String ownerName = owner_name.getText().toString().trim();
-        final String email = station_email.getText().toString().trim();
-        final String password = station_password.getText().toString().trim();
+        final HashMap<String, String> params = new HashMap<>();
+        params.put("stationName", stationName);
+        params.put("adminName", adminName);
+        params.put("email", email);
+        params.put("password", password);
+        params.put("isPetrol", String.valueOf(isPetrol));
+        params.put("isDiesel", String.valueOf(isDiesel));
 
-        final boolean isPetrol = petrol.isChecked();
-        final boolean isDiesel = diesel.isChecked();
+        String apiKey = "https://ead-fuel-app.herokuapp.com/api/auth/shed-owner/register";
 
-
-        // validations
-        if (TextUtils.isEmpty(stationName)) {
-
-            station_name.setError("Please enter the station name");
-            station_name.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(ownerName)) {
-
-            owner_name.setError("Please enter the owner's name");
-            owner_name.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(email)) {
-            station_email.setError("Please enter the email");
-            station_email.requestFocus();
-            return;
-        }
-
-        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            station_email.setError("Enter a valid email address");
-            station_email.requestFocus();
-            return;
-
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            station_password.setError("Enter a password");
-            station_password.requestFocus();
-            return;
-
-        }
-
-
-        JSONObject jsonBody = new JSONObject();
-        jsonBody.put("station_name", stationName);
-        jsonBody.put("owner_name", stationName);
-        jsonBody.put("petrol", isPetrol);
-        jsonBody.put("diesel", isDiesel);
-        jsonBody.put("email", email);
-        jsonBody.put("password", password);
-        final String requestBody = jsonBody.toString();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "/register",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            //converting the response to json object
-                            JSONObject obj = new JSONObject(response);
-
-                            //create a new user object
-                            FuelStation fuelStation = new FuelStation(
-                                    obj.getString("_id"),
-                                    obj.getString("station_name"),
-                                    obj.getString("owner_name"),
-                                    obj.getString("email"),
-                                    obj.getBoolean("petrol"),
-                                    obj.getBoolean("diesel")
-                            );
-
-                            //store the user in shared preferences
-                            SharedPrefManager.getInstance(getApplicationContext()).stationLogin(fuelStation);
-
-                            //start the profile activity
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), StationManagementActivity.class));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }})
-        {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                apiKey, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
+            public void onResponse(JSONObject response) {
                 try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                    return null;
+                    if (response.getBoolean("success")) {
+                        Log.e("register successful", "success!");
+                        Toast.makeText(StationOwnerSignupActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        startActivity(new Intent(StationOwnerSignupActivity.this, LoginActivity.class));
+                    } else {
+                        Log.e("unsuccess", "inside else!");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progressBar.setVisibility(View.GONE);
+                    Log.e("register unsuccessful", "couldn't register this user ");
                 }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(StationOwnerSignupActivity.this, "A similar user already exists", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return params;
             }
         };
 
-//        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        // request add
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjectRequest);
+    }
 
+
+    public boolean validate(View view) {
+        boolean isValid;
+        if (!TextUtils.isEmpty(stationName)) {
+            if (!TextUtils.isEmpty(adminName)) {
+                if (!TextUtils.isEmpty(email)) {
+                    if (!TextUtils.isEmpty(password)) {
+                        isValid = true;
+                    } else {
+                        utilService.showSnackBar(view, "please enter password....");
+                        isValid = false;
+                    }
+                } else {
+                    utilService.showSnackBar(view, "please enter email....");
+                    isValid = false;
+                }
+            } else {
+                utilService.showSnackBar(view, "please enter your name....");
+                isValid = false;
+            }
+        } else {
+            utilService.showSnackBar(view, "please enter the station name....");
+            isValid = false;
+        }
+        return isValid;
     }
 }
