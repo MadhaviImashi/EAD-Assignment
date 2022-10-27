@@ -23,7 +23,7 @@
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.27712365704104536" />
         <entry key="app/src/main/res/layout/activity_search_station.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25052083333333336" />
-        <entry key="app/src/main/res/layout/activity_station_dashboard_both.xml" value="0.10092592592592593" />
+        <entry key="app/src/main/res/layout/activity_station_dashboard_both.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_station_dashboard_only_diesel.xml" value="0.11684782608695653" />
         <entry key="app/src/main/res/layout/activity_station_dashboard_only_petrol.xml" value="0.15780141843971632" />
         <entry key="app/src/main/res/layout/activity_station_details.xml" value="0.25" />
