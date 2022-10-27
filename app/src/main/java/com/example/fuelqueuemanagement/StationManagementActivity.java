@@ -40,7 +40,7 @@ public class StationManagementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_station_management);
+        setContentView(R.layout.activity_station_dashboard_both);
 
         Intent intent = getIntent();
         station_id = intent.getStringExtra("user_id");
