@@ -104,12 +104,12 @@ public class UserRegisterActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     if(response.getBoolean("success")) {
-                        String token = response.getString("token");
-                        sharedPreferenceClass.setValue_string("token", token);
                         Toast.makeText(UserRegisterActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        startActivity(new Intent(UserRegisterActivity.this, LoginActivity.class));
+                    }else {
+                        Log.e("unsuccess", "inside else!");
                     }
-                    progressBar.setVisibility(View.GONE);
-                    startActivity(new Intent(UserRegisterActivity.this, LoginActivity.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     progressBar.setVisibility(View.GONE);
@@ -120,19 +120,8 @@ public class UserRegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                NetworkResponse response = error.networkResponse;
-                if(error instanceof ServerError && response != null) {
-                    try {
-                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers,  "utf-8"));
-
-                        JSONObject obj = new JSONObject(res);
-                        Toast.makeText(UserRegisterActivity.this, obj.getString("A similar user already exists"), Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                    } catch (JSONException | UnsupportedEncodingException je) {
-                        je.printStackTrace();
-                        progressBar.setVisibility(View.GONE);
-                    }
-                }
+                Toast.makeText(UserRegisterActivity.this, "A similar user already exists", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
         }) {
             @Override
